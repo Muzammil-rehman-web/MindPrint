@@ -1,15 +1,16 @@
-# MindPrint Backend - Day 3 Update
+# MindPrint Backend - Day 4 Update
 # Author: Muzammil Rehman
-# Description: Basic API setup for text emotion analysis.
+# Description: Flask API integrated with AI Emotion Model.
 
 from flask import Flask, jsonify, request
 from utils.text_preprocessor import clean_text
+from ai_models.emotion_model import predict_emotion  # NEW IMPORT ✅
 
 app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return jsonify({"message": "Welcome to MindPrint API v1.1"}), 200
+    return jsonify({"message": "Welcome to MindPrint API v1.2 (AI Integrated)"}), 200
 
 
 @app.route('/analyze_text', methods=['POST'])
@@ -21,25 +22,20 @@ def analyze_text():
         if not text:
             return jsonify({"error": "No text provided"}), 400
 
-        # Step 1: Clean the text
+        # Step 1: Clean text
         cleaned = clean_text(text)
 
-        # Step 2: Mock emotion logic (temporary)
-        if "happy" in cleaned or "love" in cleaned:
-            mood = "happy"
-            confidence = 0.92
-        elif "sad" in cleaned or "tired" in cleaned:
-            mood = "sad"
-            confidence = 0.81
-        else:
-            mood = "neutral"
-            confidence = 0.70
+        # Step 2: Predict emotion using our new AI model ✅
+        emotion = predict_emotion(cleaned)
 
-        # Step 3: Return mock response
+        # Step 3: Temporary confidence score
+        confidence = 0.80
+
+        # Step 4: Return structured response
         return jsonify({
             "original_text": text,
             "cleaned_text": cleaned,
-            "mood": mood,
+            "predicted_emotion": emotion,
             "confidence": confidence
         }), 200
 
