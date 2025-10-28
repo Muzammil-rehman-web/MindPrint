@@ -1,0 +1,21 @@
+{
+  "dataset_name": "MindPrint Emotion Samples",
+  "version": "1.0",
+  "description": "Contains metadata about datasets used in the MindPrint AI model for emotion and behavioral analysis.",
+  "created_by": "Muzammil Rehman",
+  "created_on": "2025-10-28",
+  "data_sources": [
+    {
+      "name": "user_text_inputs",
+      "type": "text",
+      "status": "planned",
+      "notes": "Will store anonymized text inputs for emotion analysis."
+    },
+    {
+      "name": "voice_samples",
+      "type": "audio",
+      "status": "planned",
+      "notes": "To be added in future releases."
+    }
+  ]
+}
