@@ -40,3 +40,9 @@
 
 #### ✅ Status:
 Day 4 completed successfully! The AI brain of MindPrint (text analysis) is now live.
+
+### Day 5 (AI Model Integration)
+- Updated emotion_model.py to include confidence scores.
+- Integrated AI model with main API route.
+- Verified API returns realistic emotion + confidence output.
+
