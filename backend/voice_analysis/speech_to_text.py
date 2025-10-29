@@ -1,19 +1,23 @@
 # backend/voice_analysis/speech_to_text.py
-# Author: Muzammil Rehman
-# Description: Converts voice input (audio) to text using speech recognition.
+# Converts a speech (audio) file to text using Google Speech Recognition API.
 
 import speech_recognition as sr
 
-def convert_speech_to_text(audio_path: str):
+def speech_to_text(audio_file_path: str) -> str:
     """
-    Converts an audio file to text using SpeechRecognition.
+    Converts the given audio file into text.
+    Supported formats: WAV, FLAC, AIFF
+    Returns the recognized text as a string.
     """
     recognizer = sr.Recognizer()
     try:
-        with sr.AudioFile(audio_path) as source:
-            audio = recognizer.record(source)
-            text = recognizer.recognize_google(audio)
-            return {"text": text, "status": "success"}
+        with sr.AudioFile(audio_file_path) as source:
+            audio_data = recognizer.record(source)
+            text = recognizer.recognize_google(audio_data)
+            return text
+    except sr.UnknownValueError:
+        return "Could not understand audio"
+    except sr.RequestError:
+        return "Speech recognition service unavailable"
     except Exception as e:
-        return {"error": str(e), "status": "failed"}
-
+        return f"Error: {str(e)}"
