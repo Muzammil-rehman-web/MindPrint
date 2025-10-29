@@ -16,7 +16,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return jsonify({"message": "Welcome to MindPrint API v1.2 (AI Integrated)"}), 200
+    return jsonify({"message": "Welcome to MindPrint developed by Muzammil Rehman"}), 200
 
 
 @app.route('/analyze_text', methods=['POST'])
