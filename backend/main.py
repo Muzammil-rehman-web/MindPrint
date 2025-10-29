@@ -3,9 +3,14 @@
 # Description: Flask API integrated with AI Emotion Model.
 
 from flask import Flask, jsonify, request
-from utils.text_preprocessor import clean_text
-from ai_models.emotion_model import predict_emotion  # NEW IMPORT ✅
+import base64
+import os
+import uuid
 
+# Local module imports
+from utils.text_preprocessor import clean_text
+from ai_models.emotion_model import predict_emotion
+from voice_analysis.speech_to_text import speech_to_text
 
 app = Flask(__name__)
 
