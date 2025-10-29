@@ -46,3 +46,7 @@ Day 4 completed successfully! The AI brain of MindPrint (text analysis) is now l
 - Integrated AI model with main API route.
 - Verified API returns realistic emotion + confidence output.
 
+### Day 6 (Voice Emotion Detection - Setup)
+- Created voice_analysis/ folder for audio processing.
+- Added speech_to_text.py for voice-to-text conversion.
+- Prepared plan for integrating voice input into API.
