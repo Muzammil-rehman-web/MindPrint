@@ -2,27 +2,27 @@
 
 import random
 
-# Temporary list of emotions
 EMOTIONS = ["Happy", "Sad", "Angry", "Neutral", "Excited", "Calm"]
 
-def predict_emotion(text: str) -> str:
+def predict_emotion(text: str):
     """
-    Basic dummy emotion predictor.
-    Later, this will be replaced by a trained model.
+    Basic rule-based emotion predictor with confidence score.
     """
     if not text.strip():
-        return "Neutral"
+        return {"emotion": "Neutral", "confidence": 0.70}
 
     keywords = {
-        "happy": "Happy",
-        "sad": "Sad",
-        "angry": "Angry",
-        "love": "Excited",
-        "calm": "Calm"
+        "happy": ("Happy", 0.91),
+        "sad": ("Sad", 0.85),
+        "angry": ("Angry", 0.89),
+        "love": ("Excited", 0.92),
+        "calm": ("Calm", 0.80),
     }
 
-    for word, emotion in keywords.items():
+    for word, (emotion, confidence) in keywords.items():
         if word in text.lower():
-            return emotion
+            return {"emotion": emotion, "confidence": confidence}
 
-    return random.choice(EMOTIONS)
+    # If no keyword matches, pick random neutral emotion
+    emotion = random.choice(EMOTIONS)
+    return {"emotion": emotion, "confidence": 0.70}
