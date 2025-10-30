@@ -1,53 +1,48 @@
-# MindPrint Backend - Day 4 Update
+# MindPrint Backend - Full Integration
 # Author: Muzammil Rehman
-# Description: Flask API integrated with AI Emotion Model.
+# Description: Flask API + Frontend Integration for Emotion Analysis
 
-from flask import Flask, jsonify, request
-import base64
-import os
-import uuid
-
-# Local module imports
-from utils.text_preprocessor import clean_text
+from flask import Flask, request, jsonify, render_template
 from ai_models.emotion_model import predict_emotion
-from voice_analysis.speech_to_text import speech_to_text
+from flask_cors import CORS
 
-app = Flask(__name__)
+# ---------------------- APP SETUP ----------------------
+app = Flask(
+    __name__,
+    static_folder="static",       # for CSS, JS, images
+    template_folder="templates"   # for HTML files
+)
+CORS(app)
 
-@app.route('/')
+# ---------------------- FRONTEND ROUTE ----------------------
+@app.route("/")
 def home():
-    return jsonify({"message": "Welcome to MindPrint developed by Muzammil Rehman"}), 200
+    """
+    Serves the main frontend page (index.html)
+    """
+    return render_template("index.html")
 
-
-@app.route('/analyze_text', methods=['POST'])
+# ---------------------- API ROUTE ----------------------
+@app.route("/analyze_text", methods=["POST"])
 def analyze_text():
+    """
+    Receives user text, predicts emotion, and returns result as JSON
+    """
     try:
         data = request.get_json()
-        text = data.get('text', '')
+        text = data.get("text", "").strip()
 
         if not text:
             return jsonify({"error": "No text provided"}), 400
 
-        # Step 1: Clean text
-        cleaned = clean_text(text)
+        emotion = predict_emotion(text)
 
-        # Step 2: Predict emotion using our new AI model ✅
-        emotion = predict_emotion(cleaned)
-
-        # Step 3: Temporary confidence score
-        confidence = 0.80
-
-        # Step 4: Return structured response
-        return jsonify({
-            "original_text": text,
-            "cleaned_text": cleaned,
-            "predicted_emotion": emotion,
-            "confidence": confidence
-        }), 200
+        return jsonify({"emotion": emotion}), 200
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
 
-if __name__ == '__main__':
-    app.run(debug=True)
+# ---------------------- MAIN ENTRY POINT ----------------------
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000, debug=True)
