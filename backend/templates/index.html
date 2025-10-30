@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MindPrint | Emotion Analyzer</title>
+
+    <!-- Link CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Logo Section -->
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='assets/logo.png') }}" alt="MindPrint Logo" class="logo" />
+        </div>
+
+        <!-- Title and Slogan -->
+        <h1 class="title">Mind<span>Print</span></h1>
+        <p class="slogan">Your Emotions, Our Intelligence.</p>
+
+        <!-- Text Input -->
+        <textarea id="userInput" placeholder="Type your thoughts here..."></textarea>
+
+        <!-- Button -->
+        <button id="analyzeBtn">Analyze Emotion</button>
+
+        <!-- Result -->
+        <div id="result"></div>
+    </div>
+
+    <!-- Link Script -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
