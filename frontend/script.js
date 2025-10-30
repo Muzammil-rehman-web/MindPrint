@@ -1,27 +1,35 @@
-async function analyzeText() {
-  const userText = document.getElementById("userInput").value;
-  const resultDiv = document.getElementById("result");
+document.getElementById("analyzeBtn").addEventListener("click", async () => {
+    const userText = document.getElementById("userText").value.trim();
+    const resultBox = document.getElementById("resultBox");
+    const emotionOutput = document.getElementById("emotionOutput");
 
-  if (!userText.trim()) {
-    resultDiv.innerHTML = "<p>Please enter some text!</p>";
-    return;
-  }
+    if (!userText) {
+        emotionOutput.textContent = "Please type something!";
+        resultBox.classList.remove("hidden");
+        return;
+    }
 
-  resultDiv.innerHTML = "<p>Analyzing...</p>";
+    try {
+        // 🧠 Connect to your Flask API endpoint
+        const response = await fetch("https://your-replit-url-or-localhost/analyze_text", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ text: userText })
+        });
 
-  try {
-    const response = await fetch("https://your-backend-url/analyze_text", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text: userText }),
-    });
+        const data = await response.json();
 
-    const data = await response.json();
-    resultDiv.innerHTML = `
-      <h3>Emotion: ${data.mood || data.emotion}</h3>
-      <p>Confidence: ${(data.confidence * 100).toFixed(1)}%</p>
-    `;
-  } catch (error) {
-    resultDiv.innerHTML = "<p>⚠️ Error connecting to backend.</p>";
-  }
-}
+        if (data.mood) {
+            emotionOutput.textContent = `${data.mood} 😊 (Confidence: ${Math.round(data.confidence * 100)}%)`;
+        } else {
+            emotionOutput.textContent = "Could not detect emotion.";
+        }
+
+        resultBox.classList.remove("hidden");
+
+    } catch (error) {
+        console.error("Error:", error);
+        emotionOutput.textContent = "Error connecting to API.";
+        resultBox.classList.remove("hidden");
+    }
+});
