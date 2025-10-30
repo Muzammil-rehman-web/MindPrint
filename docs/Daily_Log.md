@@ -62,3 +62,9 @@ Day 4 completed successfully! The AI brain of MindPrint (text analysis) is now l
 - Confirmed successful connections between text, AI, and voice modules.  
 - Backend now fully ready for next step (AI Integration - Day 8).
 
+- ### Day 8 – Frontend UI (Text Emotion Analyzer)
+- Created `frontend/` folder with `index.html`, `style.css`, `script.js`.
+- Connected frontend to backend using fetch API.
+- Successfully displayed mood predictions on UI.
+
+
