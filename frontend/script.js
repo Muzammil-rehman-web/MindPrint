@@ -1,35 +1,39 @@
-document.getElementById("analyzeBtn").addEventListener("click", async () => {
-    const userText = document.getElementById("userText").value.trim();
-    const resultBox = document.getElementById("resultBox");
-    const emotionOutput = document.getElementById("emotionOutput");
+// 🔹 MindPrint Frontend Script
+// Handles user input, sends it to backend, and displays emotion result
 
-    if (!userText) {
-        emotionOutput.textContent = "Please type something!";
-        resultBox.classList.remove("hidden");
-        return;
-    }
+const form = document.querySelector("#emotionForm");
+const input = document.querySelector("#userText");
+const result = document.querySelector("#result");
 
-    try {
-        // 🧠 Connect to your Flask API endpoint
-        const response = await fetch("https://your-replit-url-or-localhost/analyze_text", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ text: userText })
-        });
+// ✅ Your live API endpoint from Replit
+const API_URL = "https://2195dbb5-e56e-45c7-9af4-b0c924055f21-00-1j6xsuhfgxmb4.sisko.replit.dev/analyze_text";
 
-        const data = await response.json();
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-        if (data.mood) {
-            emotionOutput.textContent = `${data.mood} 😊 (Confidence: ${Math.round(data.confidence * 100)}%)`;
-        } else {
-            emotionOutput.textContent = "Could not detect emotion.";
-        }
+  const text = input.value.trim();
+  if (!text) {
+    result.textContent = "⚠️ Please enter some text!";
+    return;
+  }
 
-        resultBox.classList.remove("hidden");
+  result.textContent = "⏳ Analyzing your emotion...";
 
-    } catch (error) {
-        console.error("Error:", error);
-        emotionOutput.textContent = "Error connecting to API.";
-        resultBox.classList.remove("hidden");
-    }
+  try {
+    // 📨 Send request to backend API
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text })
+    });
+
+    // 📦 Convert response to JSON
+    const data = await response.json();
+
+    // 🎯 Display the predicted emotion
+    result.textContent = `💡 Detected Emotion: ${data.emotion}`;
+  } catch (error) {
+    console.error("Error:", error);
+    result.textContent = "❌ Something went wrong. Please try again.";
+  }
 });
