@@ -1,22 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MindPrint – Emotion Analyzer</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindPrint | Your Emotions, Our Intelligence</title>
+
+    <!-- Link CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Favicon -->
+    <link rel="icon" href="assets/mindprint_logo.png" type="image/png">
 </head>
 <body>
-  <div class="container">
-    <h1>🧠 MindPrint</h1>
-    <p>Analyze your emotions through AI</p>
 
-    <textarea id="userInput" placeholder="Type your thoughts..."></textarea>
-    <button onclick="analyzeText()">Analyze Emotion</button>
+    <!-- Main Container -->
+    <div class="container">
+        <img src="assets/mindprint_logo.png" alt="MindPrint Logo" class="logo">
+        <h1>MindPrint</h1>
+        <p class="slogan">Your Emotions, Our Intelligence.</p>
 
-    <div id="result"></div>
-  </div>
+        <!-- Input Area -->
+        <div class="input-section">
+            <textarea id="userText" placeholder="Type something to analyze your emotions..."></textarea>
+            <button id="analyzeBtn">Analyze Emotion</button>
+        </div>
 
-  <script src="script.js"></script>
+        <!-- Result Area -->
+        <div id="resultBox" class="result hidden">
+            <h2>Detected Emotion:</h2>
+            <p id="emotionOutput">---</p>
+        </div>
+    </div>
+
+    <!-- Script -->
+    <script src="script.js"></script>
 </body>
 </html>
